@@ -106,6 +106,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         tag: Optional[str] = None,
         seller: Optional[str] = None,
         favorited: Optional[str] = None,
+        title: str = None,
         limit: int = 20,
         offset: int = 0,
         requested_user: Optional[User] = None,
@@ -176,6 +177,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
                 ),
             )
             # fmt: on
+
 
         if favorited:
             query_params.append(favorited)
