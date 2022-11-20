@@ -178,6 +178,15 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             )
             # fmt: on
 
+        if title:
+            query_params.append(f"%{title}%")
+            query_params_count += 1
+
+            # fmt: off
+            query = query.where(
+                items.title.ilike(Parameter(query_params_count)),
+            )
+            # fmt: on
 
         if favorited:
             query_params.append(favorited)
