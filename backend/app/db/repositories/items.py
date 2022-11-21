@@ -138,14 +138,6 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         )
         # fmt: on
 
-        if title:
-            query_params.append(title)
-            query_params_count += 1
-
-            query = query.where(
-                items.title.like(f'%{title}%'),
-            )
-
         if tag:
             query_params.append(tag)
             query_params_count += 1
@@ -212,6 +204,11 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         query_params.extend([limit, offset])
 
         items_rows = await self.connection.fetch(query.get_sql(), *query_params)
+
+        if title:
+            for item in items_rows:
+                if title not in item['title']:
+                    items_rows.remove(item)
 
         return [
             await self.get_item_by_slug(slug=item_row['slug'], requested_user=requested_user)
