@@ -138,6 +138,14 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
         )
         # fmt: on
 
+        if title:
+            query_params.append(title)
+            query_params_count += 1
+
+            query = query.where(
+                items.title.like(title),
+            )
+
         if tag:
             query_params.append(tag)
             query_params_count += 1
@@ -175,16 +183,6 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
                         users.id,
                     )
                 ),
-            )
-            # fmt: on
-
-        if title:
-            query_params.append(f"%{title}%")
-            query_params_count += 1
-
-            # fmt: off
-            query = query.where(
-                items.title.ilike(Parameter(query_params_count)),
             )
             # fmt: on
 
