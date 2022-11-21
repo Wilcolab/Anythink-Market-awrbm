@@ -143,7 +143,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             query_params_count += 1
 
             query = query.where(
-                items.title.like(title),
+                items.title.like(f'%{title}%'),
             )
 
         if tag:
